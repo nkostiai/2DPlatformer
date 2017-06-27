@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <SDL.h>
+#include "globals.h"
 
 
 class Graphics;
@@ -16,7 +17,7 @@ public:
 
 	virtual void update(int elapsedTime) {};
 
-	void draw(Graphics &g, const int x, const int y) const;
+	void draw(Graphics &g, const int x, const int y, globals::verticalFacing facing = globals::verticalFacing::RIGHT, int degrees = 0) const;
 
 private:
 	SDL_Texture *texture;

@@ -15,7 +15,12 @@ Player::Player(Graphics& g, units::position startX, units::position startY) :
 
 void Player::draw(Graphics & g)
 {
-	sprite->draw(g, units::positionToPixel(x), units::positionToPixel(y));
+	if (currentXFacing == globals::verticalFacing::RIGHT) {
+		sprite->draw(g, units::positionToPixel(x), units::positionToPixel(y));
+	}
+	else {
+		sprite->draw(g, units::positionToPixel(x), units::positionToPixel(y), globals::LEFT);
+	}
 }
 
 void Player::update(units::MS elapsedTime)
@@ -81,12 +86,14 @@ void Player::horizontalCollisions(units::position delta) {
 	x += delta;
 }
 
-void Player::move(globals::direction direction) {
-	if (direction == globals::direction::LEFT) {
+void Player::move(Player::direction direction) {
+	if (direction == Player::direction::LEFT) {
 		xAccelModifier = -1;
+		currentXFacing = globals::LEFT;
 	}
-	else if (direction == globals::direction::RIGHT) {
+	else if (direction == Player::direction::RIGHT) {
 		xAccelModifier = 1;
+		currentXFacing = globals::RIGHT;
 	}
 	else {
 		xAccelModifier = 0;

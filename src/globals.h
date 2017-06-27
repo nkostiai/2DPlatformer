@@ -17,9 +17,7 @@ namespace globals {
 	//Resolution height
 	const int RES_HEIGHT = 480;
 
-	enum direction {
-		LEFT, RIGHT, STOP
-	};
+	enum verticalFacing{LEFT, RIGHT};
 
 
 }

@@ -10,9 +10,7 @@ class Sprite;
 namespace {
 	//Player constants
 	units::acceleration GRAVITY = 0.00450f;
-
 	units::acceleration FRICTION = 0.001434f;
-
 	units::acceleration HORIZONTAL_ACCELERATION = 0.00325f;
 
 	units::velocity MAX_HORIZONTAL_SPEED = 0.325f;
@@ -25,14 +23,18 @@ class Player : public GameObject {
 
 
 public:
+	enum direction {
+		LEFT, RIGHT, STOP
+	};
 	Player(Graphics& g, units::position startX, units::position startY);
 	void draw(Graphics& g);
 	void update(units::MS elapsedTime);
-	void move(globals::direction direction);
+	void move(Player::direction direction);
 
 	void jump();
 
 private:
+	globals::verticalFacing currentXFacing;
 	void verticalMovement(units::MS elapsedTime);
 	void verticalCollisions(units::position delta);
 	void horizontalMovement(units::MS elapsedTime);

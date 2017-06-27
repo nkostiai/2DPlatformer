@@ -17,13 +17,13 @@ void LevelState::handleInput(Input & input)
 {
 	//Player horizontal movement
 	if (input.isKeyPressed(SDL_SCANCODE_LEFT)) {
-		player->move(globals::direction::LEFT);
+		player->move(Player::direction::LEFT);
 	}
 	else if (input.isKeyPressed(SDL_SCANCODE_RIGHT)) {
-		player->move(globals::direction::RIGHT);
+		player->move(Player::direction::RIGHT);
 	}
 	else {
-		player->move(globals::direction::STOP);
+		player->move(Player::direction::STOP);
 	}
 
 	//Player jump

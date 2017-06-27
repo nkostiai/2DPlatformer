@@ -89,12 +89,21 @@ SDL_Texture * Graphics::loadImage(const std::string & fileName)
 	return spriteSheets[filePath];
 }
 
-void Graphics::renderTexture(SDL_Texture * tex, const SDL_Rect destination, const SDL_Rect * clip) const
+void Graphics::renderTexture(SDL_Texture * tex, const SDL_Rect destination, const SDL_Rect * clip, globals::verticalFacing facing, int degrees) const
 {
-	SDL_RenderCopy(gRenderer, tex, clip, &destination);
+	if (facing != globals::verticalFacing::RIGHT || degrees != 0) {
+		LOG("facing other way");
+		int width, height;
+		SDL_QueryTexture(tex, NULL, NULL, &width, &height);
+		SDL_Point center = { width, height };
+		SDL_RenderCopyEx(gRenderer, tex, clip, &destination, degrees, &center, SDL_FLIP_HORIZONTAL);
+	}
+	else {
+		SDL_RenderCopy(gRenderer, tex, clip, &destination);
+	}
 }
 
-void Graphics::renderTexture(SDL_Texture * tex, const int destX, const int destY, const SDL_Rect * clip) const
+void Graphics::renderTexture(SDL_Texture * tex, const int destX, const int destY, const SDL_Rect * clip, globals::verticalFacing facing, int degrees) const
 {
 	//Destination rectangle
 	SDL_Rect destination;
@@ -112,7 +121,7 @@ void Graphics::renderTexture(SDL_Texture * tex, const int destX, const int destY
 		SDL_QueryTexture(tex, nullptr, nullptr, &destination.w, &destination.h);
 	}
 	
-	renderTexture(tex, destination, clip);
+	renderTexture(tex, destination, clip, facing, degrees);
 }
 
 void Graphics::flip() const
@@ -124,3 +133,4 @@ void Graphics::clear() const
 {
 	SDL_RenderClear(gRenderer);
 }
+

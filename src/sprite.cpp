@@ -8,7 +8,8 @@ Sprite::Sprite(Graphics& graphics, const std::string & fileName, const int srcX,
 
 }
 
-void Sprite::draw(Graphics & g, const int x, const int y) const
+void Sprite::draw(Graphics & g, const int x, const int y, globals::verticalFacing facing, int degrees) const
 {
-	g.renderTexture(this->texture, x, y, &sourceRect);
+	g.renderTexture(this->texture, x, y, &sourceRect, facing, degrees);
 }
+
