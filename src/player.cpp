@@ -25,7 +25,29 @@ void Player::update(units::MS elapsedTime)
 }
 
 void Player::verticalMovement(units::MS elapsedTime) {
+	units::position delta = 0.0f;
+	//Update velocity
+	//if not on ground apply gravity
+	if (!isGrounded) {
+		yVelocity += GRAVITY * elapsedTime;
+		yVelocity = std::min(yVelocity, MAX_VERTICAL_SPEED);
+	}
+	delta = yVelocity * elapsedTime;
 
+	verticalCollisions(delta);
+
+}
+
+void Player::verticalCollisions(units::position delta) {
+	if (y + delta > 250) {
+		y = 250;
+		yVelocity = 0;
+		isGrounded = true;
+	}
+	else {
+		y += delta;
+		isGrounded = false;
+	}
 }
 
 void Player::horizontalMovement(units::MS elapsedTime) {
@@ -48,8 +70,14 @@ void Player::horizontalMovement(units::MS elapsedTime) {
 		}
 	}
 
-	float delta = xVelocity * elapsedTime; //amount of movement
+	//Calculate delta
+	units::position delta = xVelocity * elapsedTime; //amount of movement
+	//Handle collisions
+	horizontalCollisions(delta);
+	
+}
 
+void Player::horizontalCollisions(units::position delta) {
 	x += delta;
 }
 
@@ -62,5 +90,12 @@ void Player::move(globals::direction direction) {
 	}
 	else {
 		xAccelModifier = 0;
+	}
+}
+
+void Player::jump() {
+	if (isGrounded) {
+		yVelocity = INITIAL_JUMP_VELOCITY;
+		isGrounded = false;
 	}
 }

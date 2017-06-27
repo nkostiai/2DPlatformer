@@ -15,6 +15,7 @@ void LevelState::initializeObjects(Graphics& g) {
 
 void LevelState::handleInput(Input & input)
 {
+	//Player horizontal movement
 	if (input.isKeyPressed(SDL_SCANCODE_LEFT)) {
 		player->move(globals::direction::LEFT);
 	}
@@ -23,6 +24,11 @@ void LevelState::handleInput(Input & input)
 	}
 	else {
 		player->move(globals::direction::STOP);
+	}
+
+	//Player jump
+	if (input.isKeyPressed(SDL_SCANCODE_Z)) {
+		player->jump();
 	}
 }
 

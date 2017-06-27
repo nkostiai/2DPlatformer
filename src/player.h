@@ -16,8 +16,8 @@ namespace {
 	units::acceleration HORIZONTAL_ACCELERATION = 0.00325f;
 
 	units::velocity MAX_HORIZONTAL_SPEED = 0.325f;
-	units::velocity MAX_VERTICAL_SPEED = 0.325f;
-	units::velocity INITIAL_JUMP_VELOCITY = 0.500f;
+	units::velocity MAX_VERTICAL_SPEED = 0.255f;
+	units::velocity INITIAL_JUMP_VELOCITY = -0.876f;
 }
 
 class Player : public GameObject {
@@ -30,9 +30,13 @@ public:
 	void update(units::MS elapsedTime);
 	void move(globals::direction direction);
 
+	void jump();
+
 private:
 	void verticalMovement(units::MS elapsedTime);
+	void verticalCollisions(units::position delta);
 	void horizontalMovement(units::MS elapsedTime);
+	void horizontalCollisions(units::position delta);
 	units::position x, y;
 	units::velocity xVelocity, yVelocity;
 	bool isGrounded;
